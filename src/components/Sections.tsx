@@ -1,5 +1,6 @@
 import { motion } from 'motion/react'
-import { ArrowUpRight, Briefcase, GraduationCap, Sparkles } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, Briefcase, GraduationCap, Sparkles } from 'lucide-react'
+import { projectHref } from './ProjectPage'
 import { about, education, experience, projects, skillGroups, type SkillGroup, type Step } from '../data'
 import { asset, Reveal, SectionHeading } from './ui'
 
@@ -87,12 +88,18 @@ export function Projects() {
         <SectionHeading eyebrow="Projets" title="Quelques réalisations" />
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {projects.map((p, i) => {
-            const hasLink = p.link && p.link !== '#'
+            const internal = p.slides > 0
+            const external = !internal && p.link && p.link !== '#'
+            const hasLink = internal || external
             const Card = hasLink ? motion.a : motion.div
             return (
               <Reveal key={i} delay={i * 0.08}>
                 <Card
-                  {...(hasLink ? { href: p.link, target: '_blank', rel: 'noreferrer' } : {})}
+                  {...(internal
+                    ? { href: projectHref(p) }
+                    : external
+                      ? { href: p.link, target: '_blank', rel: 'noreferrer' }
+                      : {})}
                   className={`group flex h-full flex-col overflow-hidden rounded-3xl border border-line bg-cream ${hasLink ? 'cursor-pointer' : ''}`}
                   whileHover={{ y: -4 }}
                   transition={{ type: 'spring', bounce: 0.2, visualDuration: 0.3 }}
@@ -117,7 +124,7 @@ export function Projects() {
                     )}
                     <div className="flex items-start justify-between gap-4">
                       <h3 className="text-xl font-semibold text-brown">{p.title}</h3>
-                      {hasLink && (
+                      {external && (
                         <ArrowUpRight
                           className="size-5 shrink-0 text-burgundy transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                           aria-hidden="true"
@@ -130,6 +137,15 @@ export function Projects() {
                         <span className="font-semibold">Mon rôle : </span>
                         {p.role}
                       </p>
+                    )}
+                    {internal && (
+                      <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-burgundy">
+                        Voir le projet de A à Z
+                        <ArrowRight
+                          className="size-4 transition-transform duration-200 group-hover:translate-x-1"
+                          aria-hidden="true"
+                        />
+                      </span>
                     )}
                     <ul className="mt-auto flex flex-wrap gap-2 pt-5">
                       {p.tags.map((t, j) => (

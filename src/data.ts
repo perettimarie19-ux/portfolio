@@ -93,6 +93,8 @@ export const skillGroups: SkillGroup[] = [
 ]
 
 export type Project = {
+  slug: string
+  slides: number
   title: string
   context: string
   description: string
@@ -104,6 +106,9 @@ export type Project = {
 
 // PROJETS : un bloc { ... } par projet. Pour en ajouter un, copie un bloc entier
 // (de { à },) et colle-le en dessous. Pour en retirer un, supprime son bloc.
+//   slug        : le nom court du projet, utilisé dans l’adresse de sa page et pour le dossier
+//                 de ses diapositives (site/public/projets/<slug>/01.jpg, 02.jpg…)
+//   slides      : le nombre de diapositives dans ce dossier (0 = pas de page de présentation)
 //   title       : le nom du projet
 //   context     : le cadre (école, entreprise, année)
 //   description : 1 ou 2 phrases (ce que tu as fait, pour qui, le résultat)
@@ -113,6 +118,8 @@ export type Project = {
 //   link        : un lien vers le projet (vidéo YouTube, site…) ou '#' s’il n’y en a pas
 export const projects: Project[] = [
   {
+    slug: 'midica',
+    slides: 42,
     title: 'Stratégie de communication Midica',
     context: 'Projet d’école · ESP · 2026',
     description:
@@ -123,6 +130,8 @@ export const projects: Project[] = [
     link: '#',
   },
   {
+    slug: 'serenis-crm',
+    slides: 62,
     title: 'CRM Week — Sérénis',
     context: 'Projet d’école · ESP × ESD · 2026',
     description:
@@ -133,6 +142,8 @@ export const projects: Project[] = [
     link: '#',
   },
   {
+    slug: 'loom-kids',
+    slides: 14,
     title: 'Lancement Loom Kids',
     context: 'Projet d’école · ESP · 2026',
     description:
